@@ -73,7 +73,7 @@ To run the main simulation:
 
 ```matlab
 EMS_strategy_comparison_all_seasons
-
+```
 
 
 ## Known issues and future improvements
