@@ -36,7 +36,7 @@ The repository includes the following files:
 - `LCL-June2015v2_0.xlsx`  
   Household electricity demand dataset from the Low Carbon London dataset.
 
-- `ninja.xlsx`  
+- `ninja_pv_51.3228_-0.1038_corrected.xlsx`  
   PV generation profile used in the simulation.
 
 - `ninja_wind_51.3228_-0.1038_corrected.xlsx`  
