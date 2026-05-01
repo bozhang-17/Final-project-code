@@ -73,3 +73,13 @@ To run the main simulation:
 
 ```matlab
 EMS_strategy_comparison_all_seasons
+
+## Known issues and future improvements
+
+Although the model demonstrates the potential of optimisation-based EMS strategies, several limitations remain.
+
+First, the model does not fully include practical distribution network operator (DNO) restrictions. In the current simulation, electricity export is assumed to be available whenever surplus power and favourable tariffs exist. However, in practice, export limits may vary depending on the local network condition and connection agreement. Future work should therefore include more realistic grid connection and export constraints.
+
+Second, the rule-based baseline is relatively simple and conservative. A more advanced tariff-aware rule-based controller could be developed to allow grid charging during low-price periods and to adjust discharge decisions based on price and demand forecasts.
+
+Finally, the MPC strategy currently uses a simple persistence forecasting method. More accurate demand, PV and wind forecasting methods, including machine-learning-based approaches, could be introduced in future work to improve the scheduling performance.
