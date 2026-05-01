@@ -1,0 +1,263 @@
+%% =========================================================
+%  Final report figures for Chapter 4
+%  Corresponding to:
+%  Figure 4.1 Seasonal mean grid import power profiles
+%  Figure 4.2 Seasonal mean grid export power profiles
+%  Figure 4.3 Seasonal mean battery charging power profiles
+%  Figure 4.4 Seasonal mean battery discharging power profiles
+%  Figure 4.5 Seasonal mean battery state-of-charge profiles
+%% =========================================================
+
+fig_folder = 'final_report_figures';
+
+if ~exist(fig_folder, 'dir')
+    mkdir(fig_folder);
+end
+
+strategy_names = {'Day-ahead MILP', 'MPC', 'Rule-based'};
+season_titles  = {'Spring', 'Summer', 'Autumn', 'Winter'};
+
+%% =========================================================
+%  Figure 4.1 Seasonal mean grid import power profiles
+%% =========================================================
+
+figure('Name', 'Figure 4.1 Seasonal mean grid import power profiles', ...
+       'Position', [100 100 1200 800]);
+
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
+
+for s = 1:numel(season_names)
+
+    SEASON_now = season_names{s};
+    season_idx = valid_all & (Season_label' == string(SEASON_now));
+
+    if ~any(season_idx)
+        continue;
+    end
+
+    Pbuy_da_mean_season   = mean(Pbuy_dayahead_all(:, season_idx), 2, 'omitnan');
+    Pbuy_mpc_mean_season  = mean(Pbuy_mpc_all(:, season_idx), 2, 'omitnan');
+    Pbuy_rule_mean_season = mean(Pbuy_rule_all(:, season_idx), 2, 'omitnan');
+
+    nexttile;
+    plot(1:T, Pbuy_da_mean_season, '-o', 'LineWidth', 1.2); hold on;
+    plot(1:T, Pbuy_mpc_mean_season, '-s', 'LineWidth', 1.2);
+    plot(1:T, Pbuy_rule_mean_season, '-^', 'LineWidth', 1.2);
+
+    title(season_titles{s});
+    xlabel('Time of day');
+    ylabel('Grid import power (kW)');
+
+    xticks(1:tick_step:T);
+    xticklabels(time_lbl_48(1:tick_step:T));
+    xtickangle(45);
+
+    grid on;
+
+    if s == 1
+        legend(strategy_names, 'Location', 'best');
+    end
+
+end
+
+sgtitle('Seasonal mean grid import power profiles for the three EMS strategies');
+
+exportgraphics(gcf, fullfile(fig_folder, 'Figure_4_1_seasonal_mean_grid_import.png'), ...
+    'Resolution', 300);
+
+
+%% =========================================================
+%  Figure 4.2 Seasonal mean grid export power profiles
+%% =========================================================
+
+figure('Name', 'Figure 4.2 Seasonal mean grid export power profiles', ...
+       'Position', [100 100 1200 800]);
+
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
+
+for s = 1:numel(season_names)
+
+    SEASON_now = season_names{s};
+    season_idx = valid_all & (Season_label' == string(SEASON_now));
+
+    if ~any(season_idx)
+        continue;
+    end
+
+    Psell_da_mean_season   = mean(Psell_dayahead_all(:, season_idx), 2, 'omitnan');
+    Psell_mpc_mean_season  = mean(Psell_mpc_all(:, season_idx), 2, 'omitnan');
+    Psell_rule_mean_season = mean(Psell_rule_all(:, season_idx), 2, 'omitnan');
+
+    nexttile;
+    plot(1:T, Psell_da_mean_season, '-o', 'LineWidth', 1.2); hold on;
+    plot(1:T, Psell_mpc_mean_season, '-s', 'LineWidth', 1.2);
+    plot(1:T, Psell_rule_mean_season, '-^', 'LineWidth', 1.2);
+
+    title(season_titles{s});
+    xlabel('Time of day');
+    ylabel('Grid export power (kW)');
+
+    xticks(1:tick_step:T);
+    xticklabels(time_lbl_48(1:tick_step:T));
+    xtickangle(45);
+
+    grid on;
+
+    if s == 1
+        legend(strategy_names, 'Location', 'best');
+    end
+
+end
+
+sgtitle('Seasonal mean grid export power profiles for the three EMS strategies');
+
+exportgraphics(gcf, fullfile(fig_folder, 'Figure_4_2_seasonal_mean_grid_export.png'), ...
+    'Resolution', 300);
+
+
+%% =========================================================
+%  Figure 4.3 Seasonal mean battery charging power profiles
+%% =========================================================
+
+figure('Name', 'Figure 4.3 Seasonal mean battery charging power profiles', ...
+       'Position', [100 100 1200 800]);
+
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
+
+for s = 1:numel(season_names)
+
+    SEASON_now = season_names{s};
+    season_idx = valid_all & (Season_label' == string(SEASON_now));
+
+    if ~any(season_idx)
+        continue;
+    end
+
+    Pcha_da_mean_season   = mean(Pcha_dayahead_all(:, season_idx), 2, 'omitnan');
+    Pcha_mpc_mean_season  = mean(Pcha_mpc_all(:, season_idx), 2, 'omitnan');
+    Pcha_rule_mean_season = mean(Pcha_rule_all(:, season_idx), 2, 'omitnan');
+
+    nexttile;
+    plot(1:T, Pcha_da_mean_season, '-o', 'LineWidth', 1.2); hold on;
+    plot(1:T, Pcha_mpc_mean_season, '-s', 'LineWidth', 1.2);
+    plot(1:T, Pcha_rule_mean_season, '-^', 'LineWidth', 1.2);
+
+    title(season_titles{s});
+    xlabel('Time of day');
+    ylabel('Battery charging power (kW)');
+
+    xticks(1:tick_step:T);
+    xticklabels(time_lbl_48(1:tick_step:T));
+    xtickangle(45);
+
+    grid on;
+
+    if s == 1
+        legend(strategy_names, 'Location', 'best');
+    end
+
+end
+
+sgtitle('Seasonal mean battery charging power profiles for the three EMS strategies');
+
+exportgraphics(gcf, fullfile(fig_folder, 'Figure_4_3_seasonal_mean_battery_charging.png'), ...
+    'Resolution', 300);
+
+
+%% =========================================================
+%  Figure 4.4 Seasonal mean battery discharging power profiles
+%% =========================================================
+
+figure('Name', 'Figure 4.4 Seasonal mean battery discharging power profiles', ...
+       'Position', [100 100 1200 800]);
+
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
+
+for s = 1:numel(season_names)
+
+    SEASON_now = season_names{s};
+    season_idx = valid_all & (Season_label' == string(SEASON_now));
+
+    if ~any(season_idx)
+        continue;
+    end
+
+    Pdis_da_mean_season   = mean(Pdis_dayahead_all(:, season_idx), 2, 'omitnan');
+    Pdis_mpc_mean_season  = mean(Pdis_mpc_all(:, season_idx), 2, 'omitnan');
+    Pdis_rule_mean_season = mean(Pdis_rule_all(:, season_idx), 2, 'omitnan');
+
+    nexttile;
+    plot(1:T, Pdis_da_mean_season, '-o', 'LineWidth', 1.2); hold on;
+    plot(1:T, Pdis_mpc_mean_season, '-s', 'LineWidth', 1.2);
+    plot(1:T, Pdis_rule_mean_season, '-^', 'LineWidth', 1.2);
+
+    title(season_titles{s});
+    xlabel('Time of day');
+    ylabel('Battery discharging power (kW)');
+
+    xticks(1:tick_step:T);
+    xticklabels(time_lbl_48(1:tick_step:T));
+    xtickangle(45);
+
+    grid on;
+
+    if s == 1
+        legend(strategy_names, 'Location', 'best');
+    end
+
+end
+
+sgtitle('Seasonal mean battery discharging power profiles for the three EMS strategies');
+
+exportgraphics(gcf, fullfile(fig_folder, 'Figure_4_4_seasonal_mean_battery_discharging.png'), ...
+    'Resolution', 300);
+
+
+%% =========================================================
+%  Figure 4.5 Seasonal mean battery state-of-charge profiles
+%% =========================================================
+
+figure('Name', 'Figure 4.5 Seasonal mean battery state-of-charge profiles', ...
+       'Position', [100 100 1200 800]);
+
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
+
+for s = 1:numel(season_names)
+
+    SEASON_now = season_names{s};
+    season_idx = valid_all & (Season_label' == string(SEASON_now));
+
+    if ~any(season_idx)
+        continue;
+    end
+
+    SOC_da_mean_season   = mean(SOC_dayahead_all(:, season_idx), 2, 'omitnan');
+    SOC_mpc_mean_season  = mean(SOC_mpc_all(:, season_idx), 2, 'omitnan');
+    SOC_rule_mean_season = mean(SOC_rule_all(:, season_idx), 2, 'omitnan');
+
+    nexttile;
+    plot(0:T, SOC_da_mean_season, '-o', 'LineWidth', 1.2); hold on;
+    plot(0:T, SOC_mpc_mean_season, '-s', 'LineWidth', 1.2);
+    plot(0:T, SOC_rule_mean_season, '-^', 'LineWidth', 1.2);
+
+    title(season_titles{s});
+    xlabel('Time of day');
+    ylabel('Battery SoC (p.u.)');
+
+    xticks(0:tick_step:T);
+    xticklabels(time_lbl_49(1:tick_step:end));
+    xtickangle(45);
+
+    ylim([0 1]);
+    grid on;
+
+    if s == 1
+        legend(strategy_names, 'Location', 'best');
+    end
+
+end
+
+sgtitle('Seasonal mean battery state-of-charge profiles for the three EMS strategies');
+
+exportgraphics(gcf, fullfile(fig_folder, 'Figure_4_5_seasonal_mean_battery_soc.png'), ...
+    'Resolution', 300);
